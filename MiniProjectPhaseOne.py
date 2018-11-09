@@ -22,7 +22,8 @@ def main():
             title = result.group(1).split(" ")
             result = re.search('<desc>(.*)</desc>', line)
             desc = result.group(1).split(" ")
-            #print(title, desc)
+            # Append each word to termList
+            #TODO: Still not perfect, has some invalid strings
             for i in range(len(title)):
                 str = re.sub('&.+[0-9]+;', '', desc[i])
                 str2 = re.sub('&.+[0-9]+;', '', title[i])
@@ -34,7 +35,7 @@ def main():
                     termList.append(fin.lower() + ":" + id)
         except:
             pass
-        # get the desc words
+        # Format the arrays for Pdate, prices, and ads
         try:
             result = re.search('<date>(.*)</date>', line)
             dates = result.group(1).split(" ")
@@ -44,6 +45,7 @@ def main():
             locs = result.group(1).split(" ")
             result = re.search('<price>(.*)</price>', line)
             prices = result.group(1).split(" ")
+            #Append each row to pdates and priceList
             for d in range(len(dates)):
                 pdates.append(dates[d] + ":" + id + "," + cats[d] + "," + locs[d])
                 priceList.append(prices[d] + ":" + id + "," + cats[d] + "," + locs[d])
