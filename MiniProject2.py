@@ -2,7 +2,10 @@ import re, os
 
 def main():
     txt = input("Enter the text file: ")
-    file = open(txt, "r")
+    try:
+        file = open(txt, "r")
+    except:
+        print("Invalid file.")
     termFile = "terms.txt"
     priceFile = "prices.txt"
     adsFile = "ads.txt"
@@ -11,6 +14,66 @@ def main():
     print("Data parsed.")
     answer = input("Would you like load the db or dump it (L/D)? ")
     phaseTwo(answer, termFile, priceFile, adsFile, pdatesFile)
+    while True:
+        query = input("Enter Query(type Exit to stop): ")
+        if (query.lower() == "exit"):
+            return
+        phaseThree(query)
+
+
+def phaseThree(query):
+    # Stores keyword searches:
+    keywords = []
+    # Stores title/desc lookups:
+    desc = ""
+    # Boolean indicating if the wildcard is present
+    wildCard = False
+    # Splits the query up to parse it
+    words = re.split("( |=|<=|>=|>|<)", query)
+    # Remove empty strings/white spaces
+    words = [x for x in words if x]
+    words = [x for x in words if x.strip()]
+    for i in range(len(words)):
+        # Check for date/price conditions
+        if(words[i].lower().__contains__("date") or words[i].lower().__contains__("price")):
+            # Makes sure the price is numerical
+            if(words[i].__contains__("price")):
+                try:
+                    int(words[i+2])
+                except:
+                    print("Price must be compared to a number.")
+                    return
+            #Store the keyword search
+            arr = [words[i].lower(), words[i+1].lower(), words[i+2].lower()]
+            keywords.append(arr)
+        # Stores keywords for cat/location
+        elif(words[i].lower().__contains__("cat") or words[i].lower().__contains__("location")):
+            # Checks if the operator is invalid
+            if(words[i+1] != "="):
+                print("Invalid operator on cat/location.")
+                return
+            else:
+                arr = [words[i].lower(), words[i + 1].lower(), words[i + 2].lower()]
+                keywords.append(arr)
+        #TODO: Output stuff
+        elif(words[i].lower().__contains__("output")):
+            pass
+        # Will be stored as a title/description field
+        else:
+            # Checks if multiple fields are entered(invalid)
+            if(len(desc) > 0):
+                print("Invalid entry: Multiple title/description fields")
+                return
+            # Make sure it's not a keyword search value
+            if(not checkArray(keywords, words[i])):
+                if (words[i].endswith("%")):
+                    wildCard = True
+                desc = str(words[i])
+
+    print(keywords)
+    print("Lookup: " + desc)
+    print("Wildcard: " + str(wildCard))
+
 
 
 
@@ -74,7 +137,6 @@ def phaseOne(file, termsName, priceName, adsName, pdatesName):
                     fin = re.sub('[^a-zA-Z0-9]+', '', str)
                     fin = fin.replace("/", "")
                     termList.append(fin.lower() + ":" + id)
-
         except:
             pass
         # Format the arrays for Pdate, prices, and ads
@@ -109,5 +171,12 @@ def phaseOne(file, termsName, priceName, adsName, pdatesName):
 
 
 
+
+def checkArray(array, word):
+    inArray = False
+    for n in array:
+        if(word in n):
+            inArray = True
+    return inArray
 
 main()
