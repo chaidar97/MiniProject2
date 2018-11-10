@@ -60,15 +60,17 @@ def phaseThree(query):
             pass
         # Will be stored as a title/description field
         else:
-            # Checks if multiple fields are entered(invalid)
-            if(len(desc) > 0):
-                print("Invalid entry: Multiple title/description fields")
-                return
+
             # Make sure it's not a keyword search value
             if(not checkArray(keywords, words[i])):
-                if (words[i].endswith("%")):
+                # Checks if multiple fields are entered(invalid)
+                if (len(desc) > 0):
+                    print("Invalid entry: Multiple title/description fields")
+                    return
+                elif (words[i].endswith("%")):
                     wildCard = True
                 desc = str(words[i])
+
 
     print(keywords)
     print("Lookup: " + desc)

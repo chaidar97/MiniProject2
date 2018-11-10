@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e73f8197-8151-4e48-8a4c-2039460cd071" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/MiniProject2.py" beforeDir="false" afterPath="$PROJECT_DIR$/MiniProject2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/te.idx" beforeDir="false" afterPath="$PROJECT_DIR$/te.idx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,9 +16,9 @@
       <usages-collector id="statistics.lifecycle.project">
         <counts>
           <entry key="project.closed" value="2" />
-          <entry key="project.open.time.3" value="1" />
+          <entry key="project.open.time.3" value="2" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.opened" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -32,12 +33,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="7573" />
+          <entry key="py" value="7579" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="7572" />
+          <entry key="Python" value="7578" />
           <entry key="RegExp" value="1" />
         </counts>
       </usages-collector>
@@ -48,13 +49,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MiniProject2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="498">
-              <caret line="168" column="28" selection-start-line="168" selection-start-column="28" selection-end-line="168" selection-end-column="28" />
+            <state relative-caret-position="355">
+              <caret line="58" column="54" selection-start-line="58" selection-start-column="54" selection-end-line="58" selection-end-column="54" />
               <folding>
-                <marker date="1541818167364" expanded="true" signature="659:2740" ph="..." />
-                <marker date="1541818167364" expanded="true" signature="2803:2808" ph="..." />
-                <marker date="1541818167364" expanded="true" signature="2893:3740" ph="..." />
-                <marker date="1541818167364" expanded="true" signature="6622:6713" ph="..." />
+                <marker date="1541818298873" expanded="true" signature="659:2761" ph="..." />
+                <marker date="1541818298873" expanded="true" signature="2824:2829" ph="..." />
               </folding>
             </state>
           </provider>
@@ -151,8 +150,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2532189" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25679544" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -182,39 +182,17 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/MiniProjectPhaseOne.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="31" column="28" selection-start-line="31" selection-start-column="28" selection-end-line="31" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PhaseTwo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="3" selection-start-column="3" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PhaseThree.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PhaseOne.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/MiniProjectPhaseOne.py" />
+    <entry file="file://$PROJECT_DIR$/PhaseTwo.py" />
+    <entry file="file://$PROJECT_DIR$/PhaseThree.py" />
+    <entry file="file://$PROJECT_DIR$/PhaseOne.py" />
     <entry file="file://$PROJECT_DIR$/MiniProject2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="498">
-          <caret line="168" column="28" selection-start-line="168" selection-start-column="28" selection-end-line="168" selection-end-column="28" />
+        <state relative-caret-position="355">
+          <caret line="58" column="54" selection-start-line="58" selection-start-column="54" selection-end-line="58" selection-end-column="54" />
           <folding>
-            <marker date="1541818167364" expanded="true" signature="659:2740" ph="..." />
-            <marker date="1541818167364" expanded="true" signature="2803:2808" ph="..." />
-            <marker date="1541818167364" expanded="true" signature="2893:3740" ph="..." />
-            <marker date="1541818167364" expanded="true" signature="6622:6713" ph="..." />
+            <marker date="1541818298873" expanded="true" signature="659:2761" ph="..." />
+            <marker date="1541818298873" expanded="true" signature="2824:2829" ph="..." />
           </folding>
         </state>
       </provider>
