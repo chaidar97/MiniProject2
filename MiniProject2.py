@@ -17,7 +17,7 @@ def main():
 def phaseTwo(answer, termFile, priceFile, adsFile, pdatesFile):
     if(answer.lower() == "l"):
         # Sort the files and copy them into new text files
-        os.system("sort -u -o " + termFile + " " + termFile)
+        #os.system("sort -u -o " + termFile + " " + termFile)
         os.system("sort -n -u -o " + priceFile + " " + priceFile)
         os.system("sort -u -o " + adsFile + " " + adsFile)
         os.system("sort -u -o " + pdatesFile + " " + pdatesFile)
@@ -62,17 +62,19 @@ def phaseOne(file, termsName, priceName, adsName, pdatesName):
             #TODO: Still not perfect, has some invalid strings
             for i in range(len(title)):
                 str = re.sub('&.+[0-9]+;', '', desc[i])
-                str2 = re.sub('&.+[0-9]+;', '', title[i])
                 if(len(str) > 2):
                     # Remove XML special chars
                     fin = re.sub('[^a-zA-Z0-9]+', '', str)
                     # Remove backslashes
                     fin = fin.replace("/", "")
                     termList.append(fin.lower() + ":" + id)
-                if (len(str2) > 2):
-                    fin = re.sub('[^a-zA-Z0-9]+', '', str2)
+            for word in desc:
+                str = re.sub('&.+[0-9]+;', '', word)
+                if (len(str) > 2):
+                    fin = re.sub('[^a-zA-Z0-9]+', '', str)
                     fin = fin.replace("/", "")
                     termList.append(fin.lower() + ":" + id)
+
         except:
             pass
         # Format the arrays for Pdate, prices, and ads
