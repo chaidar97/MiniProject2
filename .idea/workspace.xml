@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e73f8197-8151-4e48-8a4c-2039460cd071" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/MiniProject2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MiniProjectPhaseOne.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MiniProject2.py" beforeDir="false" afterPath="$PROJECT_DIR$/MiniProject2.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,12 +32,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="4311" />
+          <entry key="py" value="4394" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="4310" />
+          <entry key="Python" value="4393" />
           <entry key="RegExp" value="1" />
         </counts>
       </usages-collector>
@@ -50,10 +48,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MiniProject2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="27" column="52" lean-forward="true" selection-start-line="27" selection-start-column="52" selection-end-line="27" selection-end-column="52" />
+            <state relative-caret-position="556">
+              <caret line="96" column="38" lean-forward="true" selection-start-line="96" selection-start-column="38" selection-end-line="96" selection-end-column="38" />
               <folding>
-                <marker date="1541812483667" expanded="true" signature="578:1424" ph="..." />
+                <marker date="1541812676964" expanded="true" signature="578:1424" ph="..." />
               </folding>
             </state>
           </provider>
@@ -208,10 +206,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/MiniProject2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="27" column="52" lean-forward="true" selection-start-line="27" selection-start-column="52" selection-end-line="27" selection-end-column="52" />
+        <state relative-caret-position="556">
+          <caret line="96" column="38" lean-forward="true" selection-start-line="96" selection-start-column="38" selection-end-line="96" selection-end-column="38" />
           <folding>
-            <marker date="1541812483667" expanded="true" signature="578:1424" ph="..." />
+            <marker date="1541812676964" expanded="true" signature="578:1424" ph="..." />
           </folding>
         </state>
       </provider>

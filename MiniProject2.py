@@ -64,10 +64,14 @@ def phaseOne(file, termsName, priceName, adsName, pdatesName):
                 str = re.sub('&.+[0-9]+;', '', desc[i])
                 str2 = re.sub('&.+[0-9]+;', '', title[i])
                 if(len(str) > 2):
+                    # Remove XML special chars
                     fin = re.sub('[^a-zA-Z0-9]+', '', str)
+                    # Remove backslashes
+                    fin = fin.replace("/", "")
                     termList.append(fin.lower() + ":" + id)
                 if (len(str2) > 2):
                     fin = re.sub('[^a-zA-Z0-9]+', '', str2)
+                    fin = fin.replace("/", "")
                     termList.append(fin.lower() + ":" + id)
         except:
             pass
@@ -83,8 +87,8 @@ def phaseOne(file, termsName, priceName, adsName, pdatesName):
             prices = result.group(1).split(" ")
             #Append each row to pdates and priceList
             for d in range(len(dates)):
-                pdates.append(dates[d] + ":" + id + "," + cats[d] + "," + locs[d])
-                priceList.append(prices[d] + ":" + id + "," + cats[d] + "," + locs[d])
+                pdates.append(dates[d].replace("/", "") + ":" + id.replace("/", "") + "," + cats[d].replace("/", "") + "," + locs[d].replace("/", ""))
+                priceList.append(prices[d].replace("/", "") + ":" + id.replace("/", "") + "," + cats[d].replace("/", "") + "," + locs[d].replace("/", ""))
         except:
             pass
     # create the files
