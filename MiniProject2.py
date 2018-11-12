@@ -1,11 +1,14 @@
 import re, os
 
+isOutputFull = False
+
 def main():
     txt = input("Enter the text file: ")
     try:
         file = open(txt, "r")
     except:
         print("Invalid file.")
+        return
     termFile = "terms.txt"
     priceFile = "prices.txt"
     adsFile = "ads.txt"
@@ -57,7 +60,18 @@ def phaseThree(query):
                 keywords.append(arr)
         #TODO: Output stuff
         elif(words[i].lower().__contains__("output")):
-            pass
+            try:
+                if words[i+2] == "full":
+                    isOutputFull = True
+                    print("Output set to full.")
+                elif words[i+2] == "brief":
+                    isOutputFull = False
+                    print("Output set to brief.")
+                else:
+                    print("Output can only be full or brief.")
+            except:
+                print("Output can only be full or brief.")
+            return
         # Will be stored as a title/description field
         else:
 
