@@ -167,7 +167,7 @@ def phaseOne(file, termsName, priceName, adsName, pdatesName):
             prices = result.group(1).split(" ")
             #Append each row to pdates and priceList
             for d in range(len(dates)):
-                pdates.append(dates[d].replace("/", "") + ":" + id.replace("/", "") + "," + cats[d].replace("/", "") + "," + locs[d].replace("/", ""))
+                pdates.append(dates[d] + ":" + id.replace("/", "") + "," + cats[d].replace("/", "") + "," + locs[d].replace("/", ""))
                 priceList.append(prices[d].replace("/", "") + ":" + id.replace("/", "") + "," + cats[d].replace("/", "") + "," + locs[d].replace("/", ""))
         except:
             pass
