@@ -1,6 +1,10 @@
 import re, os, bsddb3
 
 isOutputFull = False
+termDB = None
+priceDB = None
+adsDB = None;
+pdatesDB = None
 
 def main():
     txt = input("Enter the text file: ")
@@ -17,6 +21,10 @@ def main():
     print("Data parsed.")
     answer = input("Would you like load the db or dump it (L/D)? ")
     phaseTwo(answer, termFile, priceFile, adsFile, pdatesFile)
+    adsDB = bsddb3.hashopen("ad.idx")
+    termDB = bsddb3.btopen("te.idx")
+    priceDB = bsddb3.btopen("pr.idx")
+    pdatesDB = bsddb3.btopen("da.idx")
     while True:
         query = input("Enter Query(type Exit to stop): ")
         if (query.lower() == "exit"):
