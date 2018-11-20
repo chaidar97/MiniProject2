@@ -1,5 +1,8 @@
 import re, os, bsddb3
 
+# BSDDB3 Informaton: https://docs.python.org/2/library/bsddb.html
+# Just add 3 at the end its basically the same documentation :)
+
 isOutputFull = False
 termDB = None
 priceDB = None
