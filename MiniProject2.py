@@ -39,7 +39,7 @@ def phaseThree(query):
     # Stores keyword searches:
     keywords = []
     # Stores title/desc lookups:
-    desc = ""
+    desc = []
     # Boolean indicating if the wildcard is present
     wildCard = False
     # Splits the query up to parse it
@@ -88,18 +88,16 @@ def phaseThree(query):
 
             # Make sure it's not a keyword search value
             if(not checkArray(keywords, words[i])):
-                # Checks if multiple fields are entered(invalid)
-                if (len(desc) > 0):
-                    print("Invalid entry: Multiple title/description fields")
-                    return
-                elif (words[i].endswith("%")):
+                if (words[i].endswith("%")):
                     wildCard = True
-                desc = str(words[i])
+                arr = [str(words[i]), wildCard]
+                desc.append(arr)
+                wildCard = False
 
 
     print(keywords)
-    print("Lookup: " + desc)
-    print("Wildcard: " + str(wildCard))
+    print("Lookup: " + str(desc))
+
 
 
 
