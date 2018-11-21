@@ -49,9 +49,9 @@ def phaseThree(query):
     words = [x for x in words if x.strip()]
     for i in range(len(words)):
         # Check for date/price conditions
-        if(words[i].lower().__contains__("date") or words[i].lower().__contains__("price")):
+        if(words[i].lower() == ("date") or words[i].lower() == ("price")):
             # Makes sure the price is numerical
-            if(words[i].__contains__("price")):
+            if(words[i].lower() == ("price")):
                 try:
                     int(words[i+2])
                 except:
@@ -61,7 +61,7 @@ def phaseThree(query):
             arr = [words[i].lower(), words[i+1].lower(), words[i+2].lower()]
             keywords.append(arr)
         # Stores keywords for cat/location
-        elif(words[i].lower().__contains__("cat") or words[i].lower().__contains__("location")):
+        elif(words[i].lower() == ("cat") or words[i].lower() == ("location")):
             # Checks if the operator is invalid
             if(words[i+1] != "="):
                 print("Invalid operator on cat/location.")
@@ -70,7 +70,7 @@ def phaseThree(query):
                 arr = [words[i].lower(), words[i + 1].lower(), words[i + 2].lower()]
                 keywords.append(arr)
         #TODO: Output stuff
-        elif(words[i].lower().__contains__("output")):
+        elif(words[i].lower() ==("output")):
             try:
                 if words[i+2] == "full":
                     isOutputFull = True
