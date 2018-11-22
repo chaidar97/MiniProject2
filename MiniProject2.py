@@ -100,21 +100,33 @@ def phaseThree(query, adsDB, termDB, priceDB, pdatesDB):
                 desc.append(arr)
                 wildCard = False
 
-    print("----")
-    print(getResultTermsDB(desc[0][0], termDB))
-  
-
     print(desc)
     print(keywords)
     print("Lookup: " + str(desc))
+    print("----")
+    results = getResultTermsDB(desc[0][0], termDB, desc[0][1])
+    print(results)
 
+    if results != None:
+        for i in range(0, len(results)):
+            print(getAdFromID(results[i][0].decode().split(":")[1], adsDB))
+
+    dumpDB(termDB)
+
+
+
+"""
+(1) a hash index on ads.txt with ad id as key and the full ad record as data - adsDB
+(2) a B+-tree index on terms.txt with term as key and ad id as data - termDB
+(3) a B+-tree index on pdates.txt with date as key and ad id, category and location as data - pdatesDB
+(4) a B+-tree index on prices.txt with price as key and ad id, category and location as data - priceDB
+"""
 
 # Used for testing, dumps the current db into a readable format.
 def dumpDB(db):
     curs = db.cursor()
     iter = curs.first()
     while (iter):
-        print(curs.count()) #prints no. of rows that have the same key for the current key-value pair referred by the cursor
         print(iter)
 
         #iterating through duplicates
@@ -126,17 +138,40 @@ def dumpDB(db):
         iter = curs.next()
 
 # Get all instances of a keyword in the terms db title or description
-def getResultTermsDB(keyword, db):
+def getResultTermsDB(keyword, db, wildcard=False):
     cur = db.cursor()
-    res = cur.set_range(keyword.encode())
+    res = None
+
+    # If we are using a wildcard, we need to remove the % and search on the set range.
+    if wildcard == True:
+        keyword = keyword[:len(keyword)-1]
+        res = cur.set_range(keyword.encode())
+    else:
+        res = cur.set(keyword.encode())
+    
+    # if res is None, return nothing.
+    if res == None:
+        return
+
     output = [res]
     iter = cur.next()
     while iter != None:
+
+        # Check if the title or description contains the keyword. If it doesn't
+        # data is stored so that all cameras are in a row. We are done.
         if keyword in iter[0].decode() or keyword in iter[1].decode():
             output.append(iter)
         iter = cur.next()
     cur.close()
     return output
+
+# Odd behavior, the databse is storing data in a wierd way.
+def getAdFromID(id, db):
+    cur = db.cursor()
+    res = cur.set(id.encode())
+    return res;
+
+
 
 
 
