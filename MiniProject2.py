@@ -1,13 +1,10 @@
 import re, os, bsddb3
+from bsddb3 import db
 
 # BSDDB3 Informaton: https://docs.python.org/2/library/bsddb.html
 # Just add 3 at the end its basically the same documentation :)
 
 isOutputFull = False
-termDB = None
-priceDB = None
-adsDB = None;
-pdatesDB = None
 
 def main():
     txt = input("Enter the text file: ")
@@ -24,18 +21,25 @@ def main():
     print("Data parsed.")
     answer = input("Would you like load the db or dump it (L/D)? ")
     phaseTwo(answer, termFile, priceFile, adsFile, pdatesFile)
-    adsDB = bsddb3.hashopen("ad.idx")
-    termDB = bsddb3.btopen("te.idx")
-    priceDB = bsddb3.btopen("pr.idx")
-    pdatesDB = bsddb3.btopen("da.idx")
+    
+    pdatesDB = db.DB()
+    pdatesDB.open("da.idx")
+
+    adsDB = db.DB() 
+    adsDB.open("ad.idx")
+    termDB = db.DB()
+    termDB.open("te.idx")
+    priceDB = db.DB()
+    priceDB.open("pr.idx")
+
     while True:
         query = input("Enter Query(type Exit to stop): ")
         if (query.lower() == "exit"):
             return
-        phaseThree(query)
+        phaseThree(query, adsDB, termDB, priceDB, pdatesDB)
 
 
-def phaseThree(query):
+def phaseThree(query, adsDB, termDB, priceDB, pdatesDB):
     # Stores keyword searches:
     keywords = []
     # Stores title/desc lookups:
@@ -94,7 +98,8 @@ def phaseThree(query):
                 desc.append(arr)
                 wildCard = False
 
-
+    val = adsDB.cursor()
+    print(val)
     print(keywords)
     print("Lookup: " + str(desc))
 
