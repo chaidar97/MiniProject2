@@ -23,14 +23,16 @@ def main():
     phaseTwo(answer, termFile, priceFile, adsFile, pdatesFile)
     
     pdatesDB = db.DB()
-    pdatesDB.open("da.idx")
+    pdatesDB.open("da.idx", None, db.DB_BTREE)
 
     adsDB = db.DB() 
-    adsDB.open("ad.idx")
+    adsDB.open("ad.idx", None, db.DB_HASH)
+
     termDB = db.DB()
-    termDB.open("te.idx")
+    termDB.open("te.idx", None, db.DB_BTREE)
+    
     priceDB = db.DB()
-    priceDB.open("pr.idx")
+    priceDB.open("pr.idx", None, db.DB_BTREE)
 
     while True:
         query = input("Enter Query(type Exit to stop): ")
@@ -98,10 +100,44 @@ def phaseThree(query, adsDB, termDB, priceDB, pdatesDB):
                 desc.append(arr)
                 wildCard = False
 
-    val = adsDB.cursor()
-    print(val)
+    print("----")
+    print(getResultTermsDB(desc[0][0], termDB))
+  
+
+    print(desc)
     print(keywords)
     print("Lookup: " + str(desc))
+
+
+# Used for testing, dumps the current db into a readable format.
+def dumpDB(db):
+    curs = db.cursor()
+    iter = curs.first()
+    while (iter):
+        print(curs.count()) #prints no. of rows that have the same key for the current key-value pair referred by the cursor
+        print(iter)
+
+        #iterating through duplicates
+        dup = curs.next_dup()
+        while(dup!=None):
+            print(dup)
+            dup = curs.next()
+
+        iter = curs.next()
+
+# Get all instances of a keyword in the terms db title or description
+def getResultTermsDB(keyword, db):
+    cur = db.cursor()
+    res = cur.set_range(keyword.encode())
+    output = [res]
+    iter = cur.next()
+    while iter != None:
+        if keyword in iter[0].decode() or keyword in iter[1].decode():
+            output.append(iter)
+        iter = cur.next()
+    cur.close()
+    return output
+
 
 
 
