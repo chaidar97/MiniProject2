@@ -29,6 +29,7 @@ def main():
     adsDB.open("ad.idx", None, db.DB_HASH)
 
     termDB = db.DB()
+    termDB.set_flags(db.DB_DUP)
     termDB.open("te.idx", None, db.DB_BTREE)
     
     priceDB = db.DB()
@@ -109,9 +110,7 @@ def phaseThree(query, adsDB, termDB, priceDB, pdatesDB):
 
     if results != None:
         for i in range(0, len(results)):
-            print(getAdFromID(results[i][0].decode().split(":")[1], adsDB))
-
-    dumpDB(termDB)
+            print(getAdFromID(results[i][0].decode(), adsDB))
 
 
 
@@ -153,15 +152,13 @@ def getResultTermsDB(keyword, db, wildcard=False):
     if res == None:
         return
 
-    output = [res]
-    iter = cur.next()
-    while iter != None:
+    output = []
+    output.append(res)
+    dup = cur.next_dup()
+    while(dup != None):
+        output.append(dup)
+        dup = cur.next_dup()
 
-        # Check if the title or description contains the keyword. If it doesn't
-        # data is stored so that all cameras are in a row. We are done.
-        if keyword in iter[0].decode() or keyword in iter[1].decode():
-            output.append(iter)
-        iter = cur.next()
     cur.close()
     return output
 
@@ -182,14 +179,14 @@ def phaseTwo(answer, termFile, priceFile, adsFile, pdatesFile):
     if(answer.lower() == "l"):
         # Sort the files and copy them into new text files
         #os.system("sort -u -o " + termFile + " " + termFile)
-        os.system("sort -n -u -o " + priceFile + " " + priceFile)
-        os.system("sort -u -o " + adsFile + " " + adsFile)
-        os.system("sort -u -o " + pdatesFile + " " + pdatesFile)
+        #os.system("sort -n -u -o " + priceFile + " " + priceFile)
+        #os.system("sort -u -o " + adsFile + " " + adsFile)
+        #os.system("sort -u -o " + pdatesFile + " " + pdatesFile)
         # Create the indices
-        os.system("db_load -T -t btree -f " + termFile + " te.idx")
-        os.system("db_load -T -t btree -f " + priceFile + " pr.idx")
+        os.system("db_load -T -c duplicates=1 -t btree -f " + termFile + " te.idx")
+        os.system("db_load -T -c duplicates=1 -t btree -f " + priceFile + " pr.idx")
         os.system("db_load -T -t hash -f " + adsFile + " ad.idx") # Hash index
-        os.system("db_load -T -t btree -f " + pdatesFile + " da.idx")
+        os.system("db_load -T -c duplicates=1 -t btree -f " + pdatesFile + " da.idx")
     elif(answer.lower() == "d"):
         # Dumps the data into terminal feed
         os.system("db_dump -p te.idx")
@@ -263,7 +260,10 @@ def phaseOne(file, termsName, priceName, adsName, pdatesName):
     adsFile = open(adsName, "w")
     # Size of this file is different, so append values to it
     for t in termList:
-        termFile.write(t + "\n")
+        data = t.split(":")
+        print(data[0] + "--" + data[1])
+        termFile.write(data[0] + "\n")
+        termFile.write(data[1] + "\n")
     # write the data to files
     for i in range(len(pdates)):
         priceFile.write(priceList[i] + "\n")
