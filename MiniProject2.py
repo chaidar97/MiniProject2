@@ -105,12 +105,19 @@ def phaseThree(query, adsDB, termDB, priceDB, pdatesDB):
     print(keywords)
     print("Lookup: " + str(desc))
     print("----")
-    results = getResultTermsDB(desc[0][0], termDB, desc[0][1])
-    print(results)
 
-    if results != None:
-        for i in range(0, len(results)):
-            print(getAdFromID(results[i][0].decode(), adsDB))
+    # Get the data from the initial query --------------------------- TODO: Need to determine which database is the most efficient to access.
+    dataSet = set(getResultTermsDB(desc[0][0], termDB, desc[0][1]))
+    # For each of the remaining queries
+    while True:
+        # dataSet.intersect(set(The query function))
+        break
+    
+    # For each item in the set, print the required data (depeneding on output type)
+    if len(dataSet) > 0:
+        for item in dataSet:
+            # TODO: Currently prints the ad data and not the title.
+            print(getAdFromID(item[0].decode(), adsDB))
 
 
 
@@ -150,7 +157,7 @@ def getResultTermsDB(keyword, db, wildcard=False):
     
     # if res is None, return nothing.
     if res == None:
-        return
+        return []
 
     output = []
     output.append(res)
