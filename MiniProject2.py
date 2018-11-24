@@ -113,11 +113,12 @@ def phaseThree(query, adsDB, termDB, priceDB, pdatesDB):
         # dataSet.intersect(set(The query function))
         break
     
+    dumpDB(adsDB);
     # For each item in the set, print the required data (depeneding on output type)
     if len(dataSet) > 0:
         for item in dataSet:
             # TODO: Currently prints the ad data and not the title.
-            print(getAdFromID(item[0].decode(), adsDB))
+            print(adsDB[item[1]].decode())
 
 
 
@@ -169,17 +170,10 @@ def getResultTermsDB(keyword, db, wildcard=False):
     cur.close()
     return output
 
-# Odd behavior, the databse is storing data in a wierd way.
-def getAdFromID(id, db):
-    cur = db.cursor()
-    res = cur.set(id.encode())
-    return res;
-
-
-
-
-
-
+# Gets a title from an ads tag.
+def getTitleFromAd(adStr):
+    result = re.search('<ti>(.*)</ti>', adStr)
+    return result.group(1)
 
 
 def phaseTwo(answer, termFile, priceFile, adsFile, pdatesFile):
