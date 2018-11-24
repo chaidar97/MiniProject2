@@ -113,7 +113,6 @@ def phaseThree(query, adsDB, termDB, priceDB, pdatesDB):
         # dataSet.intersect(set(The query function))
         break
     
-    dumpDB(adsDB);
     # For each item in the set, print the required data (depeneding on output type)
     if len(dataSet) > 0:
         for item in dataSet:
@@ -216,8 +215,7 @@ def phaseOne(file, termsName, priceName, adsName, pdatesName):
         try:
             result = re.search('<aid>(.*)</aid>', line)
             id = result.group(1)
-            ads.append(id + ":" + line)
-            adsFile.write(id + "\n" + line + "\n")
+            adsFile.write(id + "\n" + line.replace("\n", "") + "\n")
         except:
             pass
         #Get the title and desc words
