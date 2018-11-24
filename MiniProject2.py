@@ -43,6 +43,7 @@ def main():
 
 
 def phaseThree(query, adsDB, termDB, priceDB, pdatesDB):
+    global isOutputFull
     # Stores keyword searches:
     keywords = []
     # Stores title/desc lookups:
@@ -117,7 +118,10 @@ def phaseThree(query, adsDB, termDB, priceDB, pdatesDB):
     if len(dataSet) > 0:
         for item in dataSet:
             # TODO: Currently prints the ad data and not the title.
-            print(adsDB[item[1]].decode())
+            if isOutputFull == True:
+                print([item[1].decode(), adsDB[item[1]].decode()])
+            else:
+                print([item[1].decode(), getTitleFromAd(adsDB[item[1]].decode())])
 
 
 
