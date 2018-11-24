@@ -211,6 +211,11 @@ def phaseOne(file, termsName, priceName, adsName, pdatesName):
     pdates = []
     priceList = []
     ads = []
+    # create the files
+    termFile = open(termsName, "w")
+    priceFile = open(priceName, "w")
+    pdatesFile = open(pdatesName, "w")
+    adsFile = open(adsName, "w")
     for line in file:
         id = ""
         # get the ID from the line
@@ -218,6 +223,7 @@ def phaseOne(file, termsName, priceName, adsName, pdatesName):
             result = re.search('<aid>(.*)</aid>', line)
             id = result.group(1)
             ads.append(id + ":" + line)
+            adsFile.write(id + "\n" + line + "\n")
         except:
             pass
         #Get the title and desc words
@@ -260,22 +266,17 @@ def phaseOne(file, termsName, priceName, adsName, pdatesName):
                 priceList.append(prices[d].replace("/", "") + ":" + id.replace("/", "") + "," + cats[d].replace("/", "") + "," + locs[d].replace("/", ""))
         except:
             pass
-    # create the files
-    termFile = open(termsName, "w")
-    priceFile = open(priceName, "w")
-    pdatesFile = open(pdatesName, "w")
-    adsFile = open(adsName, "w")
     # Size of this file is different, so append values to it
     for t in termList:
         data = t.split(":")
-        print(data[0] + "--" + data[1])
         termFile.write(data[0] + "\n")
         termFile.write(data[1] + "\n")
     # write the data to files
     for i in range(len(pdates)):
-        priceFile.write(priceList[i] + "\n")
-        pdatesFile.write(pdates[i] + "\n")
-        adsFile.write(ads[i] + "\n")
+        data = priceList[i].split(":")
+        priceFile.write(data[0] + "\n" + data[1] + "\n")
+        data = pdates[i].split(":")
+        pdatesFile.write(data[0] + "\n" + data[1] + "\n")
 
 
 
