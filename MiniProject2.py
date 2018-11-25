@@ -181,7 +181,7 @@ def dumpDB(db):
 
         iter = curs.next()
  
-#works only for >=. do some checks cause i'm not sure if it misses a few records
+# Get all instances of the price greater or greater and equal to the provided price.
 def getPriceGreater(price, eq, db):
     cur = db.cursor()
     res = None
@@ -217,6 +217,41 @@ def getPriceGreater(price, eq, db):
     return output    
     
 
+# Exact same as greater than but with differing operators.
+def getPriceLess(price, eq, db):
+    cur = db.cursor()
+    res = None
+    
+    res=cur.set_range(price.encode())
+
+    if res == None:
+        return []
+
+    # If we include the original key, we can set the output to be the dups from price. If not we set output to empty
+    if eq:
+        output = getAllDupsFromPrice(price, db)
+    else:
+        output = []
+
+
+    res = cur.prev()
+    if eq:
+        while res != None:
+            # If the ads price is <= to the searching price, we add it.
+            if(int(res[0]) <= int(price)):
+                output.extend(getAllDupsFromPrice(res[0].decode(), db))
+            res = cur.prev()
+    else:
+       while res != None:
+            # If the ads price is < the search price, we add it.
+            if(int(res[0]) < int(price)):
+                output.extend(getAllDupsFromPrice(res[0].decode(), db))
+            res = cur.prev()
+        
+
+    cur.close()
+    return output  
+
 # Get the price from the database.
 def getPriceQuery(symbol, amnt, db):
     output = []
@@ -225,9 +260,9 @@ def getPriceQuery(symbol, amnt, db):
     elif symbol == ">":
         return getPriceGreater(amnt, False, db)
     elif symbol == "<=":
-        incSelf = True
+        return getPriceLess(amnt, True, db)
     elif symbol == "<":
-        pass
+        return getPriceLess(amnt, False, db)
     elif symbol == "=":
         return getAllDupsFromPrice(amnt, db)
     else:
