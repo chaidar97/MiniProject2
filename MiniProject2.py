@@ -273,6 +273,25 @@ def getPriceQuery(symbol, amnt, db):
         print("Invalid symbol provided to price query.")
         return []
         
+# Get all duplicate items from a given price and return the ad id.
+def getAllDupsFromDate(key, db):
+    cur = db.cursor()
+    output = []
+    res = cur.set(key.encode())
+    if res == None:
+        return []
+
+    # Append the result since its not null
+    output.append(res[1].decode().split(',')[0].encode())
+    dup = cur.next_dup()
+
+    # While there is still a duplicate, run through it and get its ad id.
+    while(dup != None):
+        output.append(dup[1].decode().split(',')[0].encode())
+        dup = cur.next_dup()
+    cur.close()
+    return output
+
 
 # Get all duplicate items provided the key.
 def getAllDups(key, db):
@@ -382,10 +401,94 @@ def getLocationQuery(key, db):
 
 # This should run like the price query above using >, >=, <= and <. I need to go to bed so this is a TODO:---------------------------------------------------------------------
 def getDateQuery(symbol, date, db):
-    print(date)
-    print("---")
-    print(symbol)
-    return []
+    output = []
+    if symbol == ">=":
+        return getDateGreater(date, True, db)
+    elif symbol == ">":
+        return getDateGreater(date, False, db)
+    elif symbol == "<=":
+        return getDateLess(date, True, db)
+    elif symbol == "<":
+        return getDateLess(date, False, db)
+    elif symbol == "=":
+        return getAllDupsFromDate(date, db)
+    else:
+        print("Invalid symbol provided to price query.")
+        return []
+
+
+# Get all instances of the date greater or greater and equal to the provided date.
+def getDateGreater(date, eq, db):
+    cur = db.cursor()
+    res = None
+    
+    res=cur.set_range(date.encode())
+
+    if res == None:
+        return []
+
+    # If we include the original key, we can set the output to be the dups from price. If not we set output to empty
+    if eq:
+        output = getAllDupsFromDate(date, db)
+    else:
+        output = []
+
+
+    res = cur.next()
+    date = datetime.datetime.strptime(date, "%Y/%m/%d")
+    if eq:
+        while res != None:
+            # If the price is >= to the current (should be), make the output extend and add item sfrom another list.
+            if(datetime.datetime.strptime(res[0].decode(), "%Y/%m/%d") >= date):
+                output.extend(getAllDupsFromDate(res[0].decode(), db))
+            res = cur.next()
+    else:
+       while res != None:
+            # If the price is >= to the current (should be), make the output extend and add item sfrom another list.
+            if(datetime.datetime.strptime(res[0].decode(), "%Y/%m/%d") > date):
+                output.extend(getAllDupsFromDate(res[0].decode(), db))
+            res = cur.next()
+        
+
+    cur.close()
+    return output    
+    
+
+# Exact same as greater than but with differing operators.
+def getDateLess(date, eq, db):
+    cur = db.cursor()
+    res = None
+    
+    res=cur.set_range(date.encode())
+
+    if res == None:
+        return []
+
+    # If we include the original key, we can set the output to be the dups from price. If not we set output to empty
+    if eq:
+        output = getAllDupsFromDate(date, db)
+    else:
+        output = []
+
+
+    res = cur.prev()
+    date = datetime.datetime.strptime(date, "%Y/%m/%d")
+    if eq:
+        while res != None:
+            # If the date is <= the current date, we add it.
+            if(datetime.datetime.strptime(res[0].decode(), "%Y/%m/%d") <= date):
+                output.extend(getAllDupsFromDate(res[0].decode(), db))
+            res = cur.prev()
+    else:
+       while res != None:
+            # If the date is < to the current date, we add it
+            if(datetime.datetime.strptime(res[0].decode(), "%Y/%m/%d") < date):
+                output.extend(getAllDupsFromDate(res[0].decode(), db))
+            res = cur.prev()
+        
+
+    cur.close()
+    return output  
 
 # Gets a title from an ads tag
 def getTitleFromAd(adStr):
