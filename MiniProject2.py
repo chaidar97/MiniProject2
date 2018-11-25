@@ -191,12 +191,24 @@ def getPriceGreater(price, eq, db):
     if res == None:
         return []
 
-    output = getAllDupsFromPrice(price, db)
+    # If we include the original key, we can set the output to be the dups from price. If not we set output to empty
+    if eq:
+        output = getAllDupsFromPrice(price, db)
+    else:
+        output = []
+
+
     res = cur.next()
     if eq:
         while res != None:
             # If the price is >= to the current (should be), make the output extend and add item sfrom another list.
             if(int(res[0]) >= int(price)):
+                output.extend(getAllDupsFromPrice(res[0].decode(), db))
+            res = cur.next()
+    else:
+       while res != None:
+            # If the price is >= to the current (should be), make the output extend and add item sfrom another list.
+            if(int(res[0]) > int(price)):
                 output.extend(getAllDupsFromPrice(res[0].decode(), db))
             res = cur.next()
         
@@ -244,7 +256,6 @@ def getAllDupsFromPrice(key, db):
     output = []
     res = cur.set(key.encode())
     if res == None:
-        print("No result at the provided key " + key)
         return []
 
     # Append the result since its not null
