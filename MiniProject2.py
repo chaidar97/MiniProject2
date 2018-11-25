@@ -146,6 +146,30 @@ def dumpDB(db):
             dup = curs.next()
 
         iter = curs.next()
+        
+ def getPriceGreater(price, db):
+    cur = db.cursor()
+    res = None
+    print(price)
+    
+    res=cur.set(price.encode())
+    if res == None:
+        return []
+    
+    while(res!=None):
+        if(int(res[0].decode())>=int(price.encode())): 
+                 
+            print(str(res[0].decode()))
+            output = []
+            output.append(res)
+            res=cur.next()
+        
+
+    cur.close()
+    print(output)
+    return output    
+    
+    
 
 # Get all instances of a keyword in the terms db title or description
 def getResultTermsDB(keyword, db, wildcard=False):
