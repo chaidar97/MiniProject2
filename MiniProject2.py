@@ -379,6 +379,14 @@ def getLocationQuery(key, db):
     curs.close()
     return output
 
+
+# This should run like the price query above using >, >=, <= and <. I need to go to bed so this is a TODO:---------------------------------------------------------------------
+def getDateQuery(symbol, date, db):
+    print(date)
+    print("---")
+    print(symbol)
+    return []
+
 # Gets a title from an ads tag
 def getTitleFromAd(adStr):
     result = re.search('<ti>(.*)</ti>', adStr)
