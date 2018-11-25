@@ -109,14 +109,38 @@ def phaseThree(query, adsDB, termDB, priceDB, pdatesDB):
 
     # Get the data from the initial query --------------------------- TODO: Need to determine which database is the most efficient to access.
     dataSet = set(getResultTermsDB(desc[0][0], termDB, desc[0][1]))
-    dataSet= set(getPriceGreater(desc[0][0],priceDB))
-    if(str(keywords[0][0])=="date"):
-        try:
-            datetime.datetime.strptime(str(keywords[0][2]), '%Y/%m/%d')
-        except ValueError:
-            print("Incorrect data format, should be YYYY-MM-DD")   
+    
+    #iterate through the keywords- date,price,location,cat and call the database accordingly
+    data=[]
+    for keyq in keywords:
+        if keyq[0]== "date":
+            if(str(keywords[0][0])=="date"):
+                try:
+                    datetime.datetime.strptime(str(keyq[2]), '%Y/%m/%d')
+                except ValueError:
+                    print("Incorrect data format, should be YYYY-MM-DD")   
+                    break
+                    
+            dataNew=getdateQuery(keyq[1],keyq[2],pdatesDB)                
+                
+                
+        if keyq[0]=="price":
+            dataNew=getPriceQuery(keyq[1],keyq[2],priceDB)
             
-        getdateQuery(keywords[0][1],keywords[0][2],pdatesDB)
+        if keyq[0]=="location":
+            dataNew=getLocationQuery(keyq[2],priceDB)
+            
+        if keyq[0]=="cat":
+            dataNew=getCatQuery(keyq[2],priceDB)
+        
+        if(data==[]):
+            #append the data to the new one if it's the first condition
+            data.append(dataNew)
+        else:
+            #intersect the data with the next query(if someone can see if i have the right syntax or not cause i cant until i have the function methods 
+            data.intersect(dataNew)
+        
+       
     # For each of the remaining queries
     while True:
         # dataSet.intersect(set(The query function))
