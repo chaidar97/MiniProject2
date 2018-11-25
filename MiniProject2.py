@@ -109,6 +109,7 @@ def phaseThree(query, adsDB, termDB, priceDB, pdatesDB):
 
     # Get the data from the initial query --------------------------- TODO: Need to determine which database is the most efficient to access.
     dataSet = set(getResultTermsDB(desc[0][0], termDB, desc[0][1]))
+    dataSet= set(getPriceGreater(desc[0][0],priceDB))
     # For each of the remaining queries
     while True:
         # dataSet.intersect(set(The query function))
@@ -146,8 +147,9 @@ def dumpDB(db):
             dup = curs.next()
 
         iter = curs.next()
-        
- def getPriceGreater(price, db):
+ 
+#works only for >=. do some checks cause i'm not sure if it misses a few records
+def getPriceGreater(price, db):
     cur = db.cursor()
     res = None
     print(price)
@@ -169,7 +171,7 @@ def dumpDB(db):
     print(output)
     return output    
     
-    
+        
 
 # Get all instances of a keyword in the terms db title or description
 def getResultTermsDB(keyword, db, wildcard=False):
