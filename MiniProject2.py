@@ -538,7 +538,7 @@ def phaseOne(file, termsName, priceName, adsName, pdatesName):
         try:
             result = re.search('<aid>(.*)</aid>', line)
             id = result.group(1)
-            ads.append(id + ":" + line.replace("\n", ""))
+            ads.append(id + ":" + line.replace("\n", "").replace(":", ""))
         except:
             pass
         #Get the title and desc words
