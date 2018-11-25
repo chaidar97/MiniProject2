@@ -177,7 +177,7 @@ def dumpDB(db):
         dup = curs.next_dup()
         while(dup!=None):
             print(dup)
-            dup = curs.next()
+            dup = curs.next_dup()
 
         iter = curs.next()
  
@@ -330,7 +330,31 @@ def getTermQuery(keyword, db, wildcard=False):
     cur.close()
     return output
 
-# Gets a title from an ads tag.
+# Get all ad ids that have categories that match the provided key.
+# DB provided must be the price DB!
+def getCatQuery(key, db):
+    output = []
+    curs = db.cursor()
+    iter = curs.first()
+    while (iter):
+        cat = iter[1].decode().split(',')[1]
+
+        # If the category is the category we want to search for, add its aid to the output
+        if cat == key:
+            output.append(iter[1].decode().split(',')[0].encode())
+        dup = curs.next_dup()
+        while(dup!=None):
+            cat = dup[1].decode().split(',')[1]
+            if cat == key:
+                output.append(iter[1].decode().split(',')[0].encode())
+            dup = curs.next_dup()
+
+        iter = curs.next()
+    curs.close()
+    return output
+
+
+# Gets a title from an ads tag
 def getTitleFromAd(adStr):
     result = re.search('<ti>(.*)</ti>', adStr)
     return result.group(1)
