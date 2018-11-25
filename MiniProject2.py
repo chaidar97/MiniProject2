@@ -110,6 +110,13 @@ def phaseThree(query, adsDB, termDB, priceDB, pdatesDB):
     # Get the data from the initial query --------------------------- TODO: Need to determine which database is the most efficient to access.
     dataSet = set(getResultTermsDB(desc[0][0], termDB, desc[0][1]))
     dataSet= set(getPriceGreater(desc[0][0],priceDB))
+    if(str(keywords[0][0])=="date"):
+        try:
+            datetime.datetime.strptime(str(keywords[0][2]), '%Y/%m/%d')
+        except ValueError:
+            print("Incorrect data format, should be YYYY-MM-DD")   
+            
+        getdateQuery(keywords[0][1],keywords[0][2],pdatesDB)
     # For each of the remaining queries
     while True:
         # dataSet.intersect(set(The query function))
