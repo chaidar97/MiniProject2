@@ -138,6 +138,10 @@ def phaseThree(query, adsDB, termDB, priceDB, pdatesDB):
             # intersect the data with the next query
             dataSet = dataSet.intersect(set(dataNew))
 
+        # If the length of the set is 0, there is no possible way to add data since intersection on an empty set returns an empty set.
+        if len(dataSet) == 0:
+            break
+
     # For each of the terms to be searched
     for term in desc:
         dataNew = getTermQuery(term[0], termDB, term[1])
@@ -353,6 +357,27 @@ def getCatQuery(key, db):
     curs.close()
     return output
 
+# Gets all ad's that match the location provided. Code is basically the same as cat above
+def getLocationQuery(key, db):
+    output = []
+    curs = db.cursor()
+    iter = curs.first()
+    while (iter):
+        cat = iter[1].decode().split(',')[2]
+
+        # If the category is the category we want to search for, add its aid to the output
+        if cat.lower() == key:
+            output.append(iter[1].decode().split(',')[0].encode())
+        dup = curs.next_dup()
+        while(dup!=None):
+            cat = dup[1].decode().split(',')[2]
+            if cat.lower() == key:
+                output.append(iter[1].decode().split(',')[0].encode())
+            dup = curs.next_dup()
+
+        iter = curs.next()
+    curs.close()
+    return output
 
 # Gets a title from an ads tag
 def getTitleFromAd(adStr):
