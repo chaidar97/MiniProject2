@@ -111,7 +111,6 @@ def phaseThree(query, adsDB, termDB, priceDB, pdatesDB):
     
     #iterate through the keywords- date,price,location,cat and call the database accordingly
     for keyq in keywords:
-        print(keyq)
         if keyq[0]== "date":
             if(str(keywords[0][0])=="date"):
                 try:
@@ -183,55 +182,45 @@ def dumpDB(db):
         iter = curs.next()
  
 #works only for >=. do some checks cause i'm not sure if it misses a few records
-def getPriceGreater(price, db):
+def getPriceGreater(price, eq, db):
     cur = db.cursor()
     res = None
-    print(price)
     
-    res=cur.set(price.encode())
+    res=cur.set_range(price.encode())
+
     if res == None:
         return []
-    
-    while(res!=None):
-        if(int(res[0].decode())>=int(price.encode())): 
-                 
-            print(str(res[0].decode()))
-            output = []
-            output.append(res)
-            res=cur.next()
+
+    output = getAllDupsFromPrice(price, db)
+    res = cur.next()
+    if eq:
+        while res != None:
+            # If the price is >= to the current (should be), make the output extend and add item sfrom another list.
+            if(int(res[0]) >= int(price)):
+                output.extend(getAllDupsFromPrice(res[0].decode(), db))
+            res = cur.next()
         
 
     cur.close()
-    print(output)
     return output    
     
 
 # Get the price from the database.
 def getPriceQuery(symbol, amnt, db):
-    incSelf = False
-    isGE = False
-    eq = False
     output = []
     if symbol == ">=":
-        isGE = True
-        incSelf = True
+        return getPriceGreater(amnt, True, db)
     elif symbol == ">":
-        isGE = True
+        return getPriceGreater(amnt, False, db)
     elif symbol == "<=":
         incSelf = True
     elif symbol == "<":
         pass
     elif symbol == "=":
-        incSelf = True
-        
-        items = getAllDups(amnt, db)
-        if items == None:
-            return []
-        for data in items:
-            output.append(data[1].decode().split(',')[0].encode())
-        return output
+        return getAllDupsFromPrice(amnt, db)
     else:
         print("Invalid symbol provided to price query.")
+        return []
         
 
 # Get all duplicate items provided the key.
@@ -240,12 +229,31 @@ def getAllDups(key, db):
     output = []
     res = cur.set(key.encode())
     if res == None:
-        print("No result at the provided key " + key)
         return []
     output.append(res)
     dup = cur.next_dup()
     while(dup != None):
         output.append(dup)
+        dup = cur.next_dup()
+    cur.close()
+    return output
+
+# Get all duplicate items from a given price and return the ad id.
+def getAllDupsFromPrice(key, db):
+    cur = db.cursor()
+    output = []
+    res = cur.set(key.encode())
+    if res == None:
+        print("No result at the provided key " + key)
+        return []
+
+    # Append the result since its not null
+    output.append(res[1].decode().split(',')[0].encode())
+    dup = cur.next_dup()
+
+    # While there is still a duplicate, run through it and get its ad id.
+    while(dup != None):
+        output.append(dup[1].decode().split(',')[0].encode())
         dup = cur.next_dup()
     cur.close()
     return output
