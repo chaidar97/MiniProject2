@@ -136,7 +136,7 @@ def phaseThree(query, adsDB, termDB, priceDB, pdatesDB):
             dataSet = set(dataNew)
         else:
             # intersect the data with the next query
-            dataSet = dataSet.intersect(set(dataNew))
+            dataSet = dataSet.intersection(set(dataNew))
 
         # If the length of the set is 0, there is no possible way to add data since intersection on an empty set returns an empty set.
         if len(dataSet) == 0:
