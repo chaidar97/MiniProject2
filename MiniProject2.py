@@ -1,4 +1,4 @@
-import re, os, bsddb3
+import re, os, bsddb3, datetime
 from bsddb3 import db
 
 # BSDDB3 Informaton: https://docs.python.org/2/library/bsddb.html
@@ -77,7 +77,6 @@ def phaseThree(query, adsDB, termDB, priceDB, pdatesDB):
             else:
                 arr = [words[i].lower(), words[i + 1].lower(), words[i + 2].lower()]
                 keywords.append(arr)
-        #TODO: Output stuff
         elif(words[i].lower() ==("output")):
             try:
                 if words[i+2] == "full":
@@ -107,12 +106,12 @@ def phaseThree(query, adsDB, termDB, priceDB, pdatesDB):
     print("Lookup: " + str(desc))
     print("----")
 
-    # Get the data from the initial query --------------------------- TODO: Need to determine which database is the most efficient to access.
-    dataSet = set(getResultTermsDB(desc[0][0], termDB, desc[0][1]))
+    # Initialize the resulting data set.
+    dataSet = None
     
     #iterate through the keywords- date,price,location,cat and call the database accordingly
-    data=[]
     for keyq in keywords:
+        print(keyq)
         if keyq[0]== "date":
             if(str(keywords[0][0])=="date"):
                 try:
@@ -121,39 +120,43 @@ def phaseThree(query, adsDB, termDB, priceDB, pdatesDB):
                     print("Incorrect data format, should be YYYY-MM-DD")   
                     break
                     
-            dataNew=getdateQuery(keyq[1],keyq[2],pdatesDB)                
+            dataNew = getDateQuery(keyq[1],keyq[2],pdatesDB)                
                 
                 
-        if keyq[0]=="price":
+        elif keyq[0]=="price":
             dataNew=getPriceQuery(keyq[1],keyq[2],priceDB)
             
-        if keyq[0]=="location":
+        elif keyq[0]=="location":
             dataNew=getLocationQuery(keyq[2],priceDB)
             
-        if keyq[0]=="cat":
+        elif keyq[0]=="cat":
             dataNew=getCatQuery(keyq[2],priceDB)
         
-        if(data==[]):
-            #append the data to the new one if it's the first condition
-            data.append(dataNew)
+        if dataSet == None:
+            # append the data to the new one if it's the first condition
+            dataSet = set(dataNew)
         else:
-            #intersect the data with the next query(if someone can see if i have the right syntax or not cause i cant until i have the function methods 
-            data.intersect(dataNew)
-        
-       
-    # For each of the remaining queries
-    while True:
-        # dataSet.intersect(set(The query function))
-        break
+            # intersect the data with the next query
+            dataSet = dataSet.intersect(set(dataNew))
+
+    # For each of the terms to be searched
+    for term in desc:
+        dataNew = getTermQuery(term[0], termDB, term[1])
+        if dataSet == None:
+            dataSet = set(dataNew)
+        else:
+            dataSet = dataSet.intersection(set(dataNew))
+
+
     
     # For each item in the set, print the required data (depeneding on output type)
-    if len(dataSet) > 0:
-        for item in dataSet:
-            # TODO: Currently prints the ad data and not the title.
-            if isOutputFull == True:
-                print([item[1].decode(), adsDB[item[1]].decode()])
-            else:
-                print([item[1].decode(), getTitleFromAd(adsDB[item[1]].decode())])
+    if dataSet != None:
+        if len(dataSet) > 0:
+            for item in dataSet:
+                if isOutputFull == True:
+                    print([item.decode(), adsDB[item].decode()])
+                else:
+                    print([item.decode(), getTitleFromAd(adsDB[item].decode())])
 
 
 
@@ -202,10 +205,53 @@ def getPriceGreater(price, db):
     print(output)
     return output    
     
+
+# Get the price from the database.
+def getPriceQuery(symbol, amnt, db):
+    incSelf = False
+    isGE = False
+    eq = False
+    output = []
+    if symbol == ">=":
+        isGE = True
+        incSelf = True
+    elif symbol == ">":
+        isGE = True
+    elif symbol == "<=":
+        incSelf = True
+    elif symbol == "<":
+        pass
+    elif symbol == "=":
+        incSelf = True
+        
+        items = getAllDups(amnt, db)
+        if items == None:
+            return []
+        for data in items:
+            output.append(data[1].decode().split(',')[0].encode())
+        return output
+    else:
+        print("Invalid symbol provided to price query.")
         
 
+# Get all duplicate items provided the key.
+def getAllDups(key, db):
+    cur = db.cursor()
+    output = []
+    res = cur.set(key.encode())
+    if res == None:
+        print("No result at the provided key " + key)
+        return []
+    output.append(res)
+    dup = cur.next_dup()
+    while(dup != None):
+        output.append(dup)
+        dup = cur.next_dup()
+    cur.close()
+    return output
+
 # Get all instances of a keyword in the terms db title or description
-def getResultTermsDB(keyword, db, wildcard=False):
+def getTermQuery(keyword, db, wildcard=False):
     cur = db.cursor()
     res = None
 
@@ -221,10 +267,10 @@ def getResultTermsDB(keyword, db, wildcard=False):
         return []
 
     output = []
-    output.append(res)
+    output.append(res[1])
     dup = cur.next_dup()
     while(dup != None):
-        output.append(dup)
+        output.append(dup[1])
         dup = cur.next_dup()
 
     cur.close()
