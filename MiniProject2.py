@@ -1,9 +1,6 @@
 import re, os, bsddb3, datetime
 from bsddb3 import db
 
-# BSDDB3 Informaton: https://docs.python.org/2/library/bsddb.html
-# Just add 3 at the end its basically the same documentation :)
-
 isOutputFull = False
 
 def main():
@@ -499,11 +496,16 @@ def getTitleFromAd(adStr):
 def phaseTwo(answer, termFile, priceFile, adsFile, pdatesFile):
     if(answer.lower() == "l"):
         # Sort the files and copy them into new text files
-        #os.system("sort -u -o " + termFile + " " + termFile)
-        #os.system("sort -n -u -o " + priceFile + " " + priceFile)
-        #os.system("sort -u -o " + adsFile + " " + adsFile)
-        #os.system("sort -u -o " + pdatesFile + " " + pdatesFile)
-        # Create the indices
+        os.system("sort -u -o " + termFile + " " + termFile)
+        os.system("sort -n -u -o " + priceFile + " " + priceFile)
+        os.system("sort -u -o " + adsFile + " " + adsFile)
+        os.system("sort -u -o " + pdatesFile + " " + pdatesFile)
+        # Split and put data on new line
+        os.system("sed -i 's/:/\\n/g' " + termFile)
+        os.system("sed -i 's/:/\\n/g' " + priceFile)
+        os.system("sed -i 's/:/\\n/g' " + adsFile)
+        os.system("sed -i 's/:/\\n/g' " + pdatesFile)
+        # Create the indices 
         os.system("db_load -T -c duplicates=1 -t btree -f " + termFile + " te.idx")
         os.system("db_load -T -c duplicates=1 -t btree -f " + priceFile + " pr.idx")
         os.system("db_load -T -t hash -f " + adsFile + " ad.idx") # Hash index
@@ -536,7 +538,7 @@ def phaseOne(file, termsName, priceName, adsName, pdatesName):
         try:
             result = re.search('<aid>(.*)</aid>', line)
             id = result.group(1)
-            adsFile.write(id + "\n" + line.replace("\n", "") + "\n")
+            ads.append(id + ":" + line.replace("\n", ""))
         except:
             pass
         #Get the title and desc words
@@ -581,15 +583,13 @@ def phaseOne(file, termsName, priceName, adsName, pdatesName):
             pass
     # Size of this file is different, so append values to it
     for t in termList:
-        data = t.split(":")
-        termFile.write(data[0] + "\n")
-        termFile.write(data[1] + "\n")
+        termFile.write(t + "\n")
     # write the data to files
     for i in range(len(pdates)):
         data = priceList[i].split(":")
-        priceFile.write(data[0] + "\n" + data[1] + "\n")
-        data = pdates[i].split(":")
-        pdatesFile.write(data[0] + "\n" + data[1] + "\n")
+        priceFile.write(priceList[i] + "\n")
+        pdatesFile.write(pdates[i] + "\n")
+        adsFile.write(ads[i] + "\n")
 
 
 
