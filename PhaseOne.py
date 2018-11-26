@@ -10,9 +10,8 @@ def main():
     priceFile = "prices.txt"
     adsFile = "ads.txt"
     pdatesFile = "pdates.txt"
-    print("Data parsed.")
     phaseOne(file, termFile, priceFile, adsFile, pdatesFile)
-
+    print("Data Parsed")
 
 def phaseOne(file, termsName, priceName, adsName, pdatesName):
     termList = []
