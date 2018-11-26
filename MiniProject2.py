@@ -332,12 +332,14 @@ def getTermQuery(keyword, db, wildcard=False):
     # If we are using a wildcard, we need to remove the % and search on the set range.
     if wildcard == True:
         keyword = keyword[:len(keyword)-1]
-        res = cur.set_range(keyword.encode())
-    else:
-        res = cur.set(keyword.encode())
+    res = cur.set_range(keyword.encode())
     
     # if res is None, return nothing.
     if res == None:
+        return []
+
+    # If we are not using a wildcard and it doesn't match exactally:
+    if res[0].decode() != keyword and not wildcard:
         return []
 
     output = []
