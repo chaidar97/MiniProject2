@@ -2,18 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e73f8197-8151-4e48-8a4c-2039460cd071" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/MiniProject2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/MiniProject2.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MiniProject2.py" beforeDir="false" afterPath="$PROJECT_DIR$/PhaseThree.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ad.idx" beforeDir="false" afterPath="$PROJECT_DIR$/ad.idx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ads.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ads.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/da.idx" beforeDir="false" afterPath="$PROJECT_DIR$/da.idx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pdates.txt" beforeDir="false" afterPath="$PROJECT_DIR$/pdates.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pr.idx" beforeDir="false" afterPath="$PROJECT_DIR$/pr.idx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prices.txt" beforeDir="false" afterPath="$PROJECT_DIR$/prices.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/te.idx" beforeDir="false" afterPath="$PROJECT_DIR$/te.idx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/terms.txt" beforeDir="false" afterPath="$PROJECT_DIR$/terms.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Report.docx" beforeDir="false" afterPath="$PROJECT_DIR$/Report.docx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,14 +17,14 @@
     <session id="627294854">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="18" />
+          <entry key="project.closed" value="19" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.3" value="4" />
-          <entry key="project.open.time.4" value="9" />
+          <entry key="project.open.time.4" value="10" />
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.6" value="1" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="18" />
+          <entry key="project.opened" value="19" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -70,8 +59,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/PhaseThree.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="318">
-              <caret line="465" column="26" lean-forward="true" selection-start-line="465" selection-start-column="26" selection-end-line="465" selection-end-column="26" />
+            <state relative-caret-position="438">
+              <caret line="484" lean-forward="true" selection-start-line="484" selection-end-line="484" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -82,7 +71,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PhaseOne.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-597">
+            <state>
               <caret column="9" selection-start-column="9" selection-end-column="9" />
               <folding>
                 <marker date="1543257319992" expanded="true" signature="295:296" ph="..." />
@@ -95,7 +84,7 @@
         <entry file="file://$PROJECT_DIR$/PhaseTwo.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="540">
-              <caret line="36" column="9" lean-forward="true" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
+              <caret line="36" column="9" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
               <folding>
                 <marker date="1543257406263" expanded="true" signature="25:26" ph="..." />
               </folding>
@@ -149,7 +138,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -170,6 +158,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -235,7 +224,7 @@
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13662376" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13805436" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -289,14 +278,10 @@
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/MiniProjectPhaseOne.py" />
-    <entry file="file://$PROJECT_DIR$/PhaseThree.py" />
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1155">
           <caret line="77" selection-start-line="77" selection-end-line="89" selection-end-column="53" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -304,16 +289,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="570">
           <caret line="38" selection-start-line="38" selection-end-line="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PhaseThree.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="438">
+          <caret line="484" lean-forward="true" selection-start-line="484" selection-end-line="484" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <marker date="1543170130350" expanded="true" signature="50:55" ph="..." />
+            <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PhaseOne.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-597">
+        <state>
           <caret column="9" selection-start-column="9" selection-end-column="9" />
           <folding>
             <marker date="1543257319992" expanded="true" signature="295:296" ph="..." />
@@ -324,19 +315,9 @@
     <entry file="file://$PROJECT_DIR$/PhaseTwo.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="540">
-          <caret line="36" column="9" lean-forward="true" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
+          <caret line="36" column="9" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
           <folding>
             <marker date="1543257406263" expanded="true" signature="25:26" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PhaseThree.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="318">
-          <caret line="465" column="26" lean-forward="true" selection-start-line="465" selection-start-column="26" selection-end-line="465" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
