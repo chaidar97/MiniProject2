@@ -329,11 +329,22 @@ def getTermQuery(keyword, db, wildcard=False):
         return []
 
     output = []
-    output.append(res[1])
-    dup = cur.next_dup()
-    while(dup != None):
-        output.append(dup[1])
+
+    if wildcard:
+        iter = res
+        while keyword in iter[0].decode():
+            output.append(iter[1])
+            dup = cur.next_dup()
+            while(dup != None):
+                output.append(dup[1])
+                dup = cur.next_dup()
+            iter = cur.next()
+    else:
+        output.append(res[1])
         dup = cur.next_dup()
+        while(dup != None):
+            output.append(dup[1])
+            dup = cur.next_dup()
 
     cur.close()
     return output
